@@ -1,4 +1,4 @@
-import { Innertube } from 'youtube-js';
+import { Innertube } from 'youtubei-js';
 
 let ytCache = null;
 async function getYT() {
