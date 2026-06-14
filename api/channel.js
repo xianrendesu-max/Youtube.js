@@ -1,4 +1,4 @@
-import { Innertube } from 'youtubei-js';
+import { Innertube } from 'youtubei.js';
 
 let ytCache = null;
 async function getYT() {
@@ -9,7 +9,6 @@ async function getYT() {
 }
 
 export default async function handler(req, res) {
-  // CORS ヘッダーの設定
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -28,7 +27,6 @@ export default async function handler(req, res) {
     const channel = await yt.getChannel(channelId);
     const metadata = channel.metadata || {};
     
-    // 動画タブから最新動画一覧を取得を試みる
     let latestVideos = [];
     try {
       const videosTab = await channel.getVideos();
@@ -43,7 +41,6 @@ export default async function handler(req, res) {
       console.warn("Could not fetch videos tab:", e.message);
     }
 
-    // チャンネル情報は変更が少ないため、24時間エッジネットワークに強力にキャッシュ
     res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate=3600');
     return res.status(200).json({
       success: true,
