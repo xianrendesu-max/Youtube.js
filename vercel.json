@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "functions": {
+    "api/**/*.js": {
+      "maxDuration": 15,
+      "memory": 1024
+    }
+  },
+  "routes": [
+    { "src": "/api/search", "dest": "/api/search.js" },
+    { "src": "/api/video", "dest": "/api/video.js" },
+    { "src": "/api/channel", "dest": "/api/channel.js" }
+  ]
+}
