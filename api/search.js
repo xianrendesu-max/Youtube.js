@@ -1,4 +1,4 @@
-import { Innertube } from 'youtubei-js';
+import { Innertube } from 'youtubei.js';
 
 let ytCache = null;
 async function getYT() {
@@ -9,7 +9,6 @@ async function getYT() {
 }
 
 export default async function handler(req, res) {
-  // CORS ヘッダーの設定
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -27,7 +26,6 @@ export default async function handler(req, res) {
     const yt = await getYT();
     const results = await yt.search(q);
     
-    // 通常の動画オブジェクトのみを抽出し整形
     const videos = (results.videos || []).map(v => ({
       id: v.id,
       title: v.title ? v.title.toString() : null,
@@ -43,7 +41,6 @@ export default async function handler(req, res) {
       }
     }));
 
-    // 5分間エッジネットワークでキャッシュ
     res.setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate=60');
     return res.status(200).json({ success: true, data: videos });
   } catch (error) {
